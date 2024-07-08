@@ -1,0 +1,191 @@
+﻿API Documentation
+
+Overview
+This document describes the endpoints, request parameters, and responses for the custom user registration, authentication, and search functionality for a Django application.
+
+Endpoints
+
+Student Registration
+URL: /api/student/register/
+Method: POST
+Description: Registers a new student user and saves personal, college, course, and work experience data.
+
+Request Body:
+
+json
+{
+  "student": {
+    "username": "student_username",
+    "password": "student_password"
+  },
+  "data": {
+    "name": "John Doe",
+    "Gender": "Male",
+    "DOB": "1990-01-01",
+    "Contact_no": 1234567890,
+    "Whatsapp_no": 9876543210,
+    "Qualification": "Bachelor's",
+    "college": "XYZ University",
+    "course": "Computer Science",
+    "company": "ABC Corp",
+    "role": "Software Engineer"
+  }
+}
+Response:
+
+json
+{
+  "status": 1
+}
+Or in case of error:
+
+json
+{
+  "status": 0
+}
+
+
+
+
+User Login
+URL: /api/login/
+Method: POST
+Description: Authenticates a user and returns a JWT token upon successful authentication.
+
+Request Body:
+
+json
+
+{
+  "username": "student_username",
+  "password": "student_password"
+}
+Response:
+
+json
+
+{
+  "token": [
+    {
+      "token": "jwt_token"
+    }
+  ],
+  "status": [
+    {
+      "status": 1
+    }
+  ]
+}
+Or in case of error:
+
+json
+
+[
+  {
+    "status": 0
+  }
+]
+
+
+
+
+Student Detail
+URL: /api/studentdetails/
+Method: GET
+Description: Retrieves details of the logged-in student. Accessible only to admin users.
+
+Headers:
+
+Authorization: Bearer <jwt_token>
+Response:
+
+json
+
+{
+  "user": {
+    "id": 1,
+    "username": "admin"
+  },
+  "personal": {
+    "enquiry_no": 1,
+    "enquiry_date": "2023-01-01",
+    "Name": "John Doe",
+    "Gender": "Male",
+    "DOB": "1990-01-01",
+    "Contact_no": 1234567890,
+    "Whatsapp_no": 9876543210,
+    "Qualification": "Bachelor's"
+  },
+  "college": [
+    {
+      "college": "XYZ University"
+    }
+  ],
+  "course": [
+    {
+      "course": "Computer Science"
+    }
+  ],
+  "work_experience": [
+    {
+      "company": "ABC Corp",
+      "role": "Software Engineer"
+    }
+  ]
+}
+
+
+
+User Search
+URL: /admin/search/
+Method: GET
+Description: Searches users based on provided query parameters. Accessible only to admin users.
+
+Headers:
+
+Authorization: Bearer <jwt_token>
+Query Parameters:
+
+enquiry_no (optional): Integer
+name (optional): String
+gender (optional): String
+qualification (optional): String
+college (optional): String
+contact_number (optional): Integer
+whatsapp_number (optional): Integer
+dob (optional): Date (YYYY-MM-DD)
+work_experience (optional): String
+Response:
+
+json
+
+[
+  {
+    "personal": {
+      "enquiry_no": 1,
+      "enquiry_date": "2023-01-01",
+      "Name": "John Doe",
+      "Gender": "Male",
+      "DOB": "1990-01-01",
+      "Contact_no": 1234567890,
+      "Whatsapp_no": 9876543210,
+      "Qualification": "Bachelor's"
+    },
+    "college": [
+      {
+        "college": "XYZ University"
+      }
+    ],
+    "course": [
+      {
+        "course": "Computer Science"
+      }
+    ],
+    "work_experience": [
+      {
+        "company": "ABC Corp",
+        "role": "Software Engineer"
+      }
+    ]
+  }
+]

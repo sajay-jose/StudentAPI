@@ -39,13 +39,13 @@ class StudentRegister(APIView):
                 Qualification = Data['Qualification']  
             )
             student_data.save()
-            print(f"student data: {student_data}")
+
             college_data = College.objects.create(
                 user_id = stdlog,
                 college = Data['college']
                 
             )
-            print(f"college: {Data['college']}")
+
             college_data.save()
 
             course_data = Course.objects.create(
